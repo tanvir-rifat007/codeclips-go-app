@@ -1,0 +1,264 @@
+/* view transition api for smooth page navigation */
+
+@view-transition {
+  navigation: auto;
+}
+
+/* github's custom font */
+@font-face {
+  font-family: "Monaspace krypton";
+  src: url("./ui/static/fonts/MonaspaceKrypton-SemiWideRegular.woff2");
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+svg {
+  margin: 0;
+  padding: 0;
+  letter-spacing: 2px;
+}
+body {
+  height: 100vh;
+  max-width: 1176px;
+  margin: 0 auto;
+  font-family: "Monaspace krypton";
+  color: #000000b8;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav > ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+.nav-item {
+  position: relative;
+  font-size: 24px;
+  color: #000000b8;
+  overflow: hidden;
+  transition: color 0.3s;
+}
+
+.nav-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0.4);
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.3s ease-in-out;
+  z-index: -1;
+}
+
+.nav-item:hover {
+  color: white;
+}
+
+.nav-item:hover::before {
+  clip-path: inset(0);
+}
+
+nav > ul > li {
+  margin: 1rem;
+}
+
+nav > ul > li.nav-item > a {
+  text-decoration: none;
+  color: #000000b8;
+}
+
+.glass-pane {
+  border-radius: 1.5rem; /* rounded-3xl */
+  padding-left: 2.5rem; /* px-10 */
+  padding-right: 2.5rem; /* px-10 */
+  padding-top: 1rem; /* py-4 */
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem; /* py-4 */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background-color: rgba(255, 255, 255, 0.687);
+  border: 1.5px solid rgba(209, 213, 219, 1);
+  height: 100%;
+}
+
+.rainbow-mesh {
+  background-color: hsla(0, 100%, 50%, 1);
+  background-image: radial-gradient(
+      circle at 30% 20%,
+      hsla(28, 100%, 74%, 1) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 70% 10%,
+      hsla(189, 100%, 56%, 1) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 10% 50%,
+      hsla(355, 100%, 93%, 1) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 80% 40%,
+      hsla(340, 100%, 76%, 1) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 20% 80%,
+      hsla(22, 100%, 77%, 1) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 60% 80%,
+      hsla(242, 100%, 70%, 1) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 5% 5%,
+      hsla(343, 100%, 76%, 1) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 90% 90%,
+      hsla(50, 100%, 50%, 0.7) 0%,
+      transparent 70%
+    );
+}
+
+.candy-mesh {
+  background-color: #ff99ee;
+  background-image: radial-gradient(
+      at 99% 6%,
+      hsla(195, 69%, 67%, 1) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 55% 88%, hsla(189, 74%, 69%, 1) 0px, transparent 50%),
+    radial-gradient(at 53% 27%, hsla(271, 78%, 63%, 1) 0px, transparent 50%),
+    radial-gradient(at 89% 89%, hsla(317, 89%, 70%, 1) 0px, transparent 50%),
+    radial-gradient(at 35% 44%, hsla(337, 92%, 61%, 1) 0px, transparent 50%);
+}
+
+.glass {
+  backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+}
+
+.code-clips {
+  margin-top: 6rem;
+  margin-bottom: 6rem;
+}
+
+/* for home.tmpl.html css */
+.code-preview {
+  background: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  white-space: pre-wrap; /* So that newlines are preserved */
+  overflow-x: auto;
+}
+select,
+textarea {
+  width: 100%; /* Full width */
+  padding: 10px; /* Padding inside */
+  margin-bottom: 20px; /* Spacing below elements */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 16px; /* Font size */
+  color: #333; /* Text color */
+  background: #fafafa; /* Light background for inputs */
+  transition: border-color 0.3s; /* Smooth border color transition */
+}
+
+select:focus,
+textarea:focus {
+  border-color: #4a90e2; /* Change border color on focus */
+  outline: none; /* Remove default outline */
+  background: #fff; /* White background on focus */
+}
+
+textarea {
+  height: 200px; /* Set a specific height for the textarea */
+  resize: vertical; /* Allow vertical resizing */
+}
+
+.code-clips h2 {
+  text-align: center;
+}
+
+.text-clip {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: transparent; /* Hide the text color */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.949),
+    rgba(100, 100, 100, 0.868),
+    rgba(150, 150, 150, 0.801),
+    rgba(100, 100, 100, 0.868)
+  ); /* Silver gradient background */
+
+  background-clip: text; /* Clip the background to the text */
+  -webkit-background-clip: text; /* For Safari */
+  animation: textAnimation 1.5s cubic-bezier(0, 0.5, 0, 1);
+  overflow: hidden; /* Prevent overflow during animation */
+  white-space: nowrap; /* Keep text in one line */
+}
+
+@keyframes textAnimation {
+  0% {
+    transform: translateX(-100%); /* Start off-screen to the left */
+  }
+
+  50% {
+    transform: translateX(10%);
+  }
+
+  100% {
+    transform: translateX(0); /* End at original position */
+  }
+}
+
+.code-clips button {
+  display: inline-block;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.8),
+    rgba(200, 200, 200, 0.8),
+    rgba(150, 150, 150, 0.8),
+    rgba(100, 100, 100, 0.8)
+  );
+  border: none;
+  outline: none;
+  padding: 1rem 2rem;
+  color: #f0f0f0;
+  transition: all 0.5s;
+  cursor: pointer;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+}
+
+.code-clips button:hover {
+  opacity: 0.8;
+}

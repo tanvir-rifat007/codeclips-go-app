@@ -1,0 +1,71 @@
+{{ define "main" }}
+<main>
+  <section class="code-clips">
+    <h2 class="text-clip">Create Your Code Clips</h2>
+    <form id="gistForm" action="/" method="post">
+      <label for="language">Select Language:</label>
+      <select id="language" name="language">
+        <option value="go">Go</option>
+        <option value="javascript">JavaScript</option>
+        <option value="bash">Bash</option>
+        <!-- Add more languages as needed -->
+      </select>
+
+      <br /><br />
+
+      <label for="code">Your Code:</label>
+      <textarea
+        id="code"
+        name="code"
+        placeholder="Write your code here..."
+      ></textarea>
+
+      <br /><br />
+
+      <h3>Preview:</h3>
+      <pre class="code-preview" id="preview"></pre>
+
+      <br />
+
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+
+  <!-- Include highlight.js library -->
+  <script
+    defer
+    src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"
+  ></script>
+
+  <script>
+    const textarea = document.getElementById("code");
+    const preview = document.getElementById("preview");
+    const languageSelector = document.getElementById("language");
+
+    // Highlight the code when the user types in the textarea
+    textarea.addEventListener("input", () => {
+      updatePreview();
+    });
+
+    // Update the preview when the language is changed
+    languageSelector.addEventListener("change", () => {
+      updatePreview();
+    });
+
+    function updatePreview() {
+      const code = textarea.value;
+      const language = languageSelector.value;
+
+      preview.textContent = code;
+      preview.className = "code-preview"; // Reset preview class
+
+      // Apply highlight.js syntax highlighting
+      preview.classList.add(language);
+      hljs.highlightElement(preview); // Re-highlight the preview
+    }
+
+    // Initially show an empty preview
+    updatePreview();
+  </script>
+</main>
+{{ end }}

@@ -38,32 +38,17 @@ func main(){
 		templateCache:templateCache,
 	}
 
-	mux:= http.NewServeMux();
+  srv:= &http.Server{
+		Addr: *addr,
+		Handler: app.routes(),
+	}
 
-	// static file:
+	logger.Info(fmt.Sprintf("Starting server on %s",srv.Addr))
 
-	fileServer:= http.FileServer(http.Dir("./ui/static"))
-
-	mux.Handle("/static/",http.StripPrefix("/static",fileServer))
-
-
-	mux.HandleFunc("/",app.home)
-
-	mux.HandleFunc("/clips",app.clips)
-
-	logger.Info(fmt.Sprintf("Starting server on %s",*addr))
-
-	err = http.ListenAndServe(*addr, mux)
+	err = srv.ListenAndServe()
 
 	if err!=nil{
 		logger.Error("Unable to start server", "error", err)
 		os.Exit(1)
 	}
-
-
-
-
-	
-
-
 }

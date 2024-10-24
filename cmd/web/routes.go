@@ -11,9 +11,11 @@ func (app *App) routes()*http.ServeMux{
 	mux.Handle("/static/",http.StripPrefix("/static",fileServer))
 
 
-	mux.HandleFunc("/",app.home)
+	mux.HandleFunc("GET /{$}",app.home)
+	mux.HandleFunc("POST /{$}",app.codeClipsPost)
 
-	mux.HandleFunc("/clips",app.clips)
+
+	mux.HandleFunc("GET /clips",app.clips)
 
 
 	return mux

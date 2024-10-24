@@ -14,6 +14,11 @@ func (app *App) serverError(w http.ResponseWriter, r *http.Request,err error){
 
 }
 
+func (app *App) clientError(w http.ResponseWriter, status int) {
+    http.Error(w, http.StatusText(status), status)
+}
+
+
 
 
 
@@ -51,5 +56,23 @@ func (app *App) render(w http.ResponseWriter, r *http.Request, status int, page 
 	 buf.WriteTo(w)
 
 
+
+}
+
+
+func (app *App) decodePostForm(w http.ResponseWriter, r *http.Request,dst any)error{
+	err:=r.ParseForm()
+
+	if err!=nil{
+		return err
+ 	}
+
+	err = app.formDecoder.Decode(dst,r.PostForm)
+
+	if err!=nil{
+		app.serverError(w,r,err)
+		
+	}
+ return nil
 
 }

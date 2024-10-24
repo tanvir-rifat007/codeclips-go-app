@@ -9,6 +9,7 @@ import (
 
 type TemplateData struct{
 	CurrentYear int
+	CodeClips any
 }
 
 // custom template

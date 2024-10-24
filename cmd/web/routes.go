@@ -1,8 +1,15 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
 
-func (app *App) routes()*http.ServeMux{
+	"github.com/justinas/alice"
+)
+
+func (app *App) routes()http.Handler{
+
+	// this is for session management
+	dynamic:= alice.New(app.sessionManager.LoadAndSave)
 
 	mux:= http.NewServeMux()
 
@@ -11,14 +18,16 @@ func (app *App) routes()*http.ServeMux{
 	mux.Handle("/static/",http.StripPrefix("/static",fileServer))
 
 
-	mux.HandleFunc("GET /{$}",app.home)
-	mux.HandleFunc("POST /{$}",app.codeClipsPost)
+	mux.Handle("GET /{$}",dynamic.ThenFunc(app.home))
+	mux.Handle("POST /{$}",dynamic.ThenFunc(app.codeClipsPost))
 
 
-	mux.HandleFunc("GET /clips",app.clips)
+	mux.Handle("GET /clips",dynamic.ThenFunc(app.clips))
+
+	standard:= alice.New(app.logRequest,app.commonHeader)
 
 
-	return mux
+	return standard.Then(mux)
 
 
 

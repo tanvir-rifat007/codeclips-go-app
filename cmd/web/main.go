@@ -8,8 +8,11 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"time"
 
 	"codeclips.tanvirrifat.io/internal/models"
+	"github.com/alexedwards/scs/postgresstore"
+	"github.com/alexedwards/scs/v2"
 	"github.com/go-playground/form/v4"
 	_ "github.com/lib/pq"
 )
@@ -21,6 +24,8 @@ type App struct{
 	formDecoder *form.Decoder
 
 	codeClips *models.CodeClipsModel
+
+	sessionManager *scs.SessionManager
 
 }
 
@@ -56,12 +61,18 @@ func main(){
 			DB: db,
 		}
 
+		sessionManager:= scs.New()
+	sessionManager.Store = postgresstore.New(db)
+	sessionManager.Lifetime = 12 *time.Hour
+
 	// dependency injection
 	app:= &App{
 		logger: logger,
 		templateCache:templateCache,
 		formDecoder: formDecoder,
 		codeClips: codeClips,
+		sessionManager:sessionManager ,
+
 
 	}
 

@@ -13,7 +13,10 @@
     <title></title>
   </head>
   <body class="rainbow-mesh glass-pane">
-    {{ template "nav" .}} {{ template "main" .}} {{ template "footer" .}}
+    {{ template "nav" .}} {{ with .Toast }}
+    <div id="toast-message" class="toast">{{.}}</div>
+
+    {{ end }} {{ template "main" .}} {{ template "footer" .}}
   </body>
 </html>
 

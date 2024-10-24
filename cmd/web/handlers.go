@@ -24,6 +24,10 @@ func (app *App) home(w http.ResponseWriter, r *http.Request){
 	
 }
 
+
+
+
+
 func (app *App) codeClipsPost(w http.ResponseWriter, r *http.Request){
 	var form CreateCodeClips
 	// decode form and update it to the struct
@@ -41,11 +45,28 @@ func (app *App) codeClipsPost(w http.ResponseWriter, r *http.Request){
         return
 	}
 
+	// toast message:
+
+	app.sessionManager.Put(r.Context(),"toast","Code clips saved successfully!")
+
+	http.Redirect(w,r,"/clips",http.StatusSeeOther)
+
 }
 
 
 func (app *App) clips(w http.ResponseWriter, r *http.Request){
+	codeClips,err:= app.codeClips.GetAll()
+
+	if err!=nil{
+		app.serverError(w,r,err)
+		return
+	}
+
+
+
+
 	data:= app.newTemplateData(r)
+	data.CodeClips = codeClips
 
 	app.render(w,r,http.StatusOK,"clips.tmpl.html",data)
 

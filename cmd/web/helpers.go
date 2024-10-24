@@ -28,6 +28,7 @@ func (app *App) newTemplateData(r *http.Request)TemplateData{
 
 	return TemplateData{
 		CurrentYear: time.Now().Year(),
+		 Toast : app.sessionManager.PopString(r.Context(), "toast"),
 	}
 
 }

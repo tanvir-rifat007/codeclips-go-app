@@ -1,5 +1,101 @@
 {{ define "main" }}
 
-<h1>clips ...</h1>
+<h1>Saved Gists</h1>
+{{range .CodeClips }}
+<div>
+  <h2>{{.Title}} ({{.Language}})</h2>
+  <div class="code-container">
+    <pre><code class="{{.Language}}">{{.Content | html}}</code></pre>
+    <button class="copy-btn" data-code="{{.Content | html}}">Copy</button>
+    {{ if eq .Language "javascript" }}
+    <button class="run-btn" data-code="{{.Content | html}}">Run</button>
+    {{ end }}
+  </div>
+</div>
+{{end}}
+
+<div id="output"></div>
+
+<!-- Modal Structure -->
+<div id="copyModal" class="modal">
+  <div class="modal-content">
+    <span id="modal-close" class="close">&times;</span>
+    <p id="modal-message">Code copied to clipboard!</p>
+  </div>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+<script>
+  // Highlight code
+  document.querySelectorAll("pre code").forEach((block) => {
+    hljs.highlightElement(block);
+  });
+
+  // Copy button functionality
+  document.querySelectorAll(".copy-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      const code = button.getAttribute("data-code");
+      navigator.clipboard
+        .writeText(code)
+        .then(() => {
+          showModal("Code copied to clipboard!");
+        })
+        .catch((err) => {
+          console.error("Error copying code: ", err);
+          showModal("Error copying code.");
+        });
+    });
+  });
+
+  // Run button functionality
+  document.querySelectorAll(".run-btn").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const code = button.getAttribute("data-code");
+      const outputDiv = document.getElementById("output");
+      outputDiv.innerHTML = ""; // Clear previous output
+
+      try {
+        // Redirect console.log to capture output
+        const output = [];
+        const originalLog = console.log;
+        console.log = function (...args) {
+          output.push(args.join(" "));
+        };
+
+        // Create a new function and execute it
+        new Function(code)();
+
+        // Restore original console.log
+        console.log = originalLog;
+
+        // Display the captured output
+        outputDiv.innerHTML =
+          output.length > 0 ? output.join("<br/>") : "No output";
+      } catch (error) {
+        outputDiv.innerHTML = "Error: " + error.message;
+      }
+    });
+  });
+
+  // Modal functionality
+  const modal = document.getElementById("copyModal");
+  const modalClose = document.getElementById("modal-close");
+  const modalMessage = document.getElementById("modal-message");
+
+  function showModal(message) {
+    modalMessage.textContent = message;
+    modal.style.display = "block";
+  }
+
+  modalClose.onclick = function () {
+    modal.style.display = "none";
+  };
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+</script>
 
 {{ end }}

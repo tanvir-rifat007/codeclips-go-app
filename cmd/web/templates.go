@@ -4,12 +4,15 @@ import (
 	"html/template"
 	"path/filepath"
 	"time"
+
+	"codeclips.tanvirrifat.io/internal/models"
 )
 
 
 type TemplateData struct{
 	CurrentYear int
-	CodeClips any
+	CodeClips []models.CodeClips
+	Toast string
 }
 
 // custom template

@@ -12,6 +12,7 @@ import (
 type TemplateData struct{
 	CurrentYear int
 	CodeClips []models.CodeClips
+	Form any
 	Toast string
 }
 

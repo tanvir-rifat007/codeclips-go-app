@@ -358,3 +358,64 @@ div.toast {
   max-width: 400px;
   text-align: center;
 }
+
+.error {
+  color: #c0392b;
+  font-weight: bold;
+  display: block;
+}
+
+.error + textarea,
+.error + input {
+  border-color: #c0392b !important;
+  border-width: 2px !important;
+}
+
+.element {
+  position: relative;
+  padding-bottom: 10px; /* Add space for the border */
+}
+
+.element::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px; /* Height of the bottom border */
+  background-color: #ff99ee;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.642),
+    rgba(100, 100, 100, 0.953),
+    rgba(150, 150, 150, 0.539),
+    rgba(100, 100, 100, 0.456)
+  );
+}
+
+.element::before {
+  content: "";
+  position: absolute;
+  bottom: 6px; /* Adjust the spacing between the two lines */
+  left: 0;
+  width: 100%;
+  height: 4px; /* Height of the second line */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.949),
+    rgba(100, 100, 100, 0.868),
+    rgba(150, 150, 150, 0.801),
+    rgba(100, 100, 100, 0.868)
+  );
+}
+
+#downloadButton {
+  display: none;
+  color: white;
+  background-color: #0063d0;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}

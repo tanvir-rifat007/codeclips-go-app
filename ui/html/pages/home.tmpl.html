@@ -4,23 +4,34 @@
     <h2 class="text-clip">Create Your Code Clips</h2>
     <form id="gistForm" action="/" method="post">
       <label for="title">Title:</label>
-      <input type="text" id="title" name="title" placeholder="Enter title..." />
+
+      {{with .Form.FieldErrors.title}}
+      <label class="error">{{.}}</label>
+      {{end}}
+      <input
+        type="text"
+        id="title"
+        name="title"
+        placeholder="Enter title..."
+        value="{{ .Form.Title }}"
+      />
       <label for="language">Select Language:</label>
+
       <select id="language" name="language">
         <option value="go">Go</option>
         <option value="javascript">JavaScript</option>
         <option value="bash">Bash</option>
-        <!-- Add more languages as needed -->
       </select>
 
       <br /><br />
 
-      <label for="code">Your Code:</label>
-      <textarea
-        id="code"
-        name="content"
-        placeholder="Write your code here..."
-      ></textarea>
+      <label for="content">Your Code:</label>
+      {{with .Form.FieldErrors.content}}
+      <label class="error">{{.}}</label>
+      {{end}}
+      <textarea id="code" name="content" placeholder="Write your code here...">
+{{ .Form.Content }}</textarea
+      >
 
       <br /><br />
 
@@ -33,7 +44,6 @@
     </form>
   </section>
 
-  <!-- Include highlight.js library -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
 
   <script>
@@ -41,12 +51,10 @@
     const preview = document.getElementById("preview");
     const languageSelector = document.getElementById("language");
 
-    // Highlight the code when the user types in the textarea
     textarea.addEventListener("input", () => {
       updatePreview();
     });
 
-    // Update the preview when the language is changed
     languageSelector.addEventListener("change", () => {
       updatePreview();
     });
@@ -56,14 +64,12 @@
       const language = languageSelector.value;
 
       preview.textContent = code;
-      preview.className = "code-preview"; // Reset preview class
+      preview.className = "code-preview";
 
-      // Apply highlight.js syntax highlighting
       preview.classList.add(language);
-      hljs.highlightElement(preview); // Re-highlight the preview
+      hljs.highlightElement(preview);
     }
 
-    // Initially show an empty preview
     updatePreview();
   </script>
 </main>

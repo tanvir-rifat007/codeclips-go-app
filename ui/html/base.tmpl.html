@@ -10,14 +10,66 @@
       rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css"
     />
+
+    <!-- pwa -->
+    <link rel="manifest" href="/static/app.webmanifest" />
+
+    <!-- pwa splash screen -->
+
+    <script
+      async
+      src="https://unpkg.com/pwacompat"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+
+    <script src="/static/js/app.js"></script>
+
     <title></title>
   </head>
   <body class="rainbow-mesh glass-pane">
     {{ template "nav" .}} {{ with .Toast }}
     <div id="toast-message" class="toast">{{.}}</div>
-
     {{ end }} {{ template "main" .}} {{ template "footer" .}}
+
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        const toast = document.getElementById("toast-message");
+        if (toast) {
+          setTimeout(() => {
+            toast.style.transition = "opacity 0.5s ease";
+            toast.style.opacity = "0";
+            setTimeout(() => {
+              toast.style.display = "none";
+            }, 500);
+          }, 3000);
+        } else {
+          console.log("Toast not found");
+        }
+      });
+
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("/static/js/sw.js").then(
+            function (registration) {
+              console.log(
+                "ServiceWorker registration successful with scope: ",
+                registration.scope
+              );
+            },
+            function (err) {
+              console.log("ServiceWorker registration failed: ", err);
+            }
+          );
+        });
+      }
+    </script>
   </body>
 </html>
-
 {{ end }}

@@ -15,7 +15,13 @@ func (app *App) routes()http.Handler{
 
 	fileServer:= http.FileServer(http.Dir("./ui/static"))
 
+	// this fileserver for service worker offline capability
+
+		mux.Handle("/", http.FileServer(http.Dir(".")))
+
+
 	mux.Handle("/static/",http.StripPrefix("/static",fileServer))
+
 
 
 	mux.Handle("GET /{$}",dynamic.ThenFunc(app.home))

@@ -45,6 +45,7 @@ addr := flag.String("addr", ":" + port, "HTTP network address")
 	  DB_URL := os.Getenv("DB_URL")
     if DB_URL == "" {
         logger.Error("DB_URL environment variable is not set")
+				
         os.Exit(1)
     }
 

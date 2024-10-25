@@ -33,8 +33,14 @@ func main(){
 
 	logger:= slog.New(slog.NewTextHandler(os.Stdout,nil))
 
+    port := os.Getenv("PORT")
+    if port == "" {
+        port = "4000"
+    }
+
+
 	// cli arguments
-	addr:=flag.String("addr",":4000","HTTP network address")
+addr := flag.String("addr", ":" + port, "HTTP network address") 
   
 	  DB_URL := os.Getenv("DB_URL")
     if DB_URL == "" {
@@ -83,8 +89,10 @@ func main(){
 
 	}
 
+
+
   srv:= &http.Server{
-		Addr: *addr,
+		Addr:*addr,
 		Handler: app.routes(),
 	}
 

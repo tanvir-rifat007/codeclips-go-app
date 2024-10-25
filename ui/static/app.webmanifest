@@ -2,8 +2,8 @@
   "id": "/",
   "start_url": "/",
   "scope": "/",
-  "name": "VANILLA PWA",
-  "short_name": "VANILLA PWA",
+  "name": "Codeclips pwa",
+  "short_name": "Codeclips pwa",
   "display": "standalone",
   "theme_color": "#0063d0",
   "icons": [
@@ -21,7 +21,7 @@
     }
   ],
 
-  "description": "You can buy the best products here",
+  "description": "You can save code and run code here",
   "screenshots": [
     {
       "src": "./images/s1.png",

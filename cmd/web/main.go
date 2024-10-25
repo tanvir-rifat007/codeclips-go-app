@@ -14,6 +14,7 @@ import (
 	"github.com/alexedwards/scs/postgresstore"
 	"github.com/alexedwards/scs/v2"
 	"github.com/go-playground/form/v4"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
@@ -35,8 +36,15 @@ func main(){
 
 	// cli arguments
 	addr:=flag.String("addr",":4000","HTTP network address")
+	err := godotenv.Load()
+  if err != nil {
+		logger.Error("error loading env")
+		os.Exit(1)
+  }
+  DB_URL := os.Getenv("DB_URL")
 
-	dsn:= flag.String("dsn","postgres://codeclips@localhost/codeclips?sslmode=disable","Postgres connection string")
+
+	dsn:= flag.String("dsn",DB_URL,"Database URL")
 
 	db,err:= openDB(*dsn)
 

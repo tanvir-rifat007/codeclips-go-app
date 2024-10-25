@@ -100,3 +100,10 @@ func (app *App) clips(w http.ResponseWriter, r *http.Request){
 
 
 }
+
+
+func (app *App) contact(w http.ResponseWriter, r *http.Request){
+	data:= app.newTemplateData(r)
+
+	app.render(w,r,http.StatusOK,"contact.tmpl.html",data)
+}

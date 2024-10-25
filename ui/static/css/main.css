@@ -419,3 +419,102 @@ div.toast {
   font-size: 16px;
   cursor: pointer;
 }
+
+nav a.live {
+  color: #34495e;
+  cursor: default;
+}
+
+nav a.live:hover {
+  text-decoration: none;
+}
+
+nav a.live:after {
+  content: "";
+  display: block;
+  position: relative;
+  left: calc(50% - 7px);
+  top: 9px;
+  width: 14px;
+  height: 14px;
+  background: #f7f9fa;
+  border-left: 1px solid #e4e5e7;
+  border-bottom: 1px solid #e4e5e7;
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+/* .contact-section {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.949),
+    rgba(100, 100, 100, 0.868),
+    rgba(150, 150, 150, 0.801),
+    rgba(100, 100, 100, 0.868)
+  );
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+  border-radius: 50%;
+} */
+
+.contact-section img {
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+
+  border: double 4px transparent;
+  border-radius: 50%;
+  background-image: linear-gradient(white, white),
+    radial-gradient(circle at top left, #f00, #3020ff);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+
+.contacts-arena {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+
+.contacts-arena svg.github {
+  border: double 4px transparent;
+  border-radius: 50%;
+  background-image: linear-gradient(white, white),
+    radial-gradient(circle at top left, rgba(13, 83, 195, 0.799), #ff8420);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+
+  margin: 0;
+  padding: 0;
+}
+
+.contacts-arena svg.insta {
+  border: double 4px transparent;
+  border-radius: 50%;
+  background-image: linear-gradient(white, white),
+    radial-gradient(circle at top left, #f00, #3020ff);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+
+  margin: 0;
+  padding: 0;
+}
+
+.contacts-arena svg.fb {
+  border: double 4px transparent;
+  border-radius: 50%;
+  background-image: linear-gradient(white, white),
+    radial-gradient(circle at top left, rgba(13, 83, 195, 0.799), #ff8420);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+
+  margin: 0;
+  padding: 0;
+}

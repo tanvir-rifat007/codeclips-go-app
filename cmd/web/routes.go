@@ -29,6 +29,8 @@ func (app *App) routes()http.Handler{
 
 
 	mux.Handle("GET /clips",dynamic.ThenFunc(app.clips))
+	mux.Handle("GET /contact",dynamic.ThenFunc(app.contact))
+
 
 	standard:= alice.New(app.logRequest,app.commonHeader)
 

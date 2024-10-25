@@ -36,7 +36,11 @@ func main(){
 	// cli arguments
 	addr:=flag.String("addr",":4000","HTTP network address")
   
-  DB_URL := os.Getenv("DB_URL")
+	  DB_URL := os.Getenv("DB_URL")
+    if DB_URL == "" {
+        logger.Error("DB_URL environment variable is not set")
+        os.Exit(1)
+    }
 
 
 	dsn:= flag.String("dsn",DB_URL,"Database URL")

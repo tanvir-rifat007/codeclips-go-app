@@ -373,7 +373,8 @@ div.toast {
 
 .element {
   position: relative;
-  padding-bottom: 10px; /* Add space for the border */
+  padding-bottom: 10px;
+  margin-bottom: 3rem;
 }
 
 .element::after {
@@ -411,6 +412,16 @@ div.toast {
 
 #downloadButton {
   display: none;
+  color: white;
+  background-color: #0063d0;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#signupButton {
   color: white;
   background-color: #0063d0;
   padding: 10px 20px;

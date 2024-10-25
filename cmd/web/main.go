@@ -25,6 +25,8 @@ type App struct{
 
 	codeClips *models.CodeClipsModel
 
+	users *models.UserModel
+
 	sessionManager *scs.SessionManager
 
 }
@@ -74,6 +76,9 @@ addr := flag.String("addr", ":" + port, "HTTP network address")
 	 codeClips:= &models.CodeClipsModel{
 			DB: db,
 		}
+		users:= &models.UserModel{
+			DB: db,
+		}
 
 		sessionManager:= scs.New()
 	sessionManager.Store = postgresstore.New(db)
@@ -85,6 +90,7 @@ addr := flag.String("addr", ":" + port, "HTTP network address")
 		templateCache:templateCache,
 		formDecoder: formDecoder,
 		codeClips: codeClips,
+		users:users,
 		sessionManager:sessionManager ,
 
 

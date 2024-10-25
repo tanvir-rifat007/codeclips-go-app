@@ -29,6 +29,13 @@ func (app *App) routes()http.Handler{
 
 
 	mux.Handle("GET /clips",dynamic.ThenFunc(app.clips))
+
+	mux.Handle("GET /signup",dynamic.ThenFunc(app.signup))
+
+	mux.Handle("POST /signup",dynamic.ThenFunc(app.signupPost))
+
+	mux.Handle("GET /login",dynamic.ThenFunc(app.login))
+
 	mux.Handle("GET /contact",dynamic.ThenFunc(app.contact))
 
 

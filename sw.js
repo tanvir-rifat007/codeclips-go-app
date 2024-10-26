@@ -17,14 +17,17 @@ self.addEventListener("install", async function (event) {
 });
 
 self.addEventListener("fetch", (event) => {
-  console.log("Fetch intercepted for:", event.request.url);
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request);
-    })
+    fetch(event.request)
+      .then((networkResponse) => {
+        return caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
+        });
+      })
+      .catch(() => {
+        return caches.match(event.request);
+      })
   );
 });
 

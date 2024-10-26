@@ -16,6 +16,8 @@ type TemplateData struct{
 	Toast string
 
 	IsAuthenticated bool
+
+
 }
 
 // custom template

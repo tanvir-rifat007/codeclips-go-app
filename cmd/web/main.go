@@ -29,6 +29,7 @@ type App struct{
 
 	sessionManager *scs.SessionManager
 
+
 }
 
 func main(){
@@ -80,6 +81,8 @@ addr := flag.String("addr", ":" + port, "HTTP network address")
 			DB: db,
 		}
 
+
+
 		sessionManager:= scs.New()
 	sessionManager.Store = postgresstore.New(db)
 	sessionManager.Lifetime = 12 *time.Hour
@@ -92,6 +95,9 @@ addr := flag.String("addr", ":" + port, "HTTP network address")
 		codeClips: codeClips,
 		users:users,
 		sessionManager:sessionManager ,
+
+
+		
 
 
 	}

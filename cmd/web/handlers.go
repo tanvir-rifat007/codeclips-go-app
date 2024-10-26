@@ -246,6 +246,13 @@ func (app *App) loginPost(w http.ResponseWriter, r *http.Request){
 		// add the authentication user id in the session
 		app.sessionManager.Put(r.Context(), "authenticatedUserID", id)
 
+
+		// get user from id:
+
+		
+		
+
+
 		http.Redirect(w, r, "/clips", http.StatusSeeOther)
 }
 

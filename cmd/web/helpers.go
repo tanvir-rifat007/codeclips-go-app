@@ -34,6 +34,8 @@ func (app *App) newTemplateData(r *http.Request)TemplateData{
 
 		 
 
+		 
+
 
 	}
 
@@ -94,4 +96,19 @@ func (app *App) isAuthenticated(r *http.Request)bool{
 		return isAuthenticated
 }
 
+
+// // get user from session:
+// func (app *App) getUserFromSession(r *http.Request) (*models.User, error) {
+    
+//     userID, ok := app.sessionManager.Get(r.Context(), "authenticatedUserID").(int)
+//     if !ok {
+//         return nil, errors.New("user not found in session")
+//     }
+
+//     user, err := app.users.GetByID(userID)
+//     if err != nil {
+//         return nil, err
+//     }
+//     return user, nil
+// }
 

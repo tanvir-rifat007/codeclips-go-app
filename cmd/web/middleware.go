@@ -66,3 +66,22 @@ func (app *App) authenticate(next http.Handler) http.Handler{
 		
 	})
 }
+
+
+// protected routes middleware
+
+func (app *App) requireAuthentication(next http.Handler) http.Handler{
+	
+	return http.HandlerFunc(func(w http.ResponseWriter,r *http.Request){
+		if !app.isAuthenticated(r){
+			http.Redirect(w,r,"/login",http.StatusSeeOther)
+			return
+		}
+
+		// which pages requires authentication are not stored any browser cache:
+    w.Header().Add("Cache-Control", "no-store")
+
+		next.ServeHTTP(w,r)
+	})
+
+}

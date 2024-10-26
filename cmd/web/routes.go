@@ -11,6 +11,10 @@ func (app *App) routes()http.Handler{
 	// this is for session management
 	dynamic:= alice.New(app.sessionManager.LoadAndSave,app.authenticate)
 
+	// protected routes:
+	protected:= dynamic.Append(app.requireAuthentication)
+
+
 	mux:= http.NewServeMux()
 
 	fileServer:= http.FileServer(http.Dir("./ui/static"))
@@ -25,11 +29,6 @@ func (app *App) routes()http.Handler{
 
 
 	mux.Handle("GET /{$}",dynamic.ThenFunc(app.home))
-	mux.Handle("POST /{$}",dynamic.ThenFunc(app.codeClipsPost))
-
-
-	mux.Handle("GET /clips",dynamic.ThenFunc(app.clips))
-
 	mux.Handle("GET /signup",dynamic.ThenFunc(app.signup))
 
 	mux.Handle("POST /signup",dynamic.ThenFunc(app.signupPost))
@@ -38,10 +37,21 @@ func (app *App) routes()http.Handler{
 
 	mux.Handle("POST /login",dynamic.ThenFunc(app.loginPost))
 
-	mux.Handle("GET /logout",dynamic.ThenFunc(app.logoutPost))
+		mux.Handle("GET /contact",dynamic.ThenFunc(app.contact))
+
+	// authentication chara clips post korte parbo nah
+	mux.Handle("POST /{$}",protected.ThenFunc(app.codeClipsPost))
+
+	// authentication chara clips dekhteo  parbo nah
+
+	mux.Handle("GET /clips",protected.ThenFunc(app.clips))
+
+	// authentication chara logout o korte parbo nah
+
+	mux.Handle("GET /logout",protected.ThenFunc(app.logoutPost))
 
 
-	mux.Handle("GET /contact",dynamic.ThenFunc(app.contact))
+
 
 
 	standard:= alice.New(app.logRequest,app.commonHeader)

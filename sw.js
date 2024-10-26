@@ -11,6 +11,8 @@ self.addEventListener("install", async function (event) {
     "https://fonts.googleapis.com",
     "https://fonts.gstatic.com",
     "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200",
+
+    "postgresql://codeclips_go_app_user:8ILVITzV6FAOB65FsMAM9Ct1eZJmHQmK@dpg-csdilsl6l47c73dbp770-a.oregon-postgres.render.com/codeclips_go_app",
   ];
   const cache = await caches.open(CACHE_NAME);
   cache.addAll(urlsToCache);

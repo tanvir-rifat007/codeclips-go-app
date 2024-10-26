@@ -14,6 +14,8 @@ type TemplateData struct{
 	CodeClips []models.CodeClips
 	Form any
 	Toast string
+
+	IsAuthenticated bool
 }
 
 // custom template

@@ -9,7 +9,7 @@ import (
 func (app *App) routes()http.Handler{
 
 	// this is for session management
-	dynamic:= alice.New(app.sessionManager.LoadAndSave)
+	dynamic:= alice.New(app.sessionManager.LoadAndSave,app.authenticate)
 
 	mux:= http.NewServeMux()
 
@@ -35,6 +35,11 @@ func (app *App) routes()http.Handler{
 	mux.Handle("POST /signup",dynamic.ThenFunc(app.signupPost))
 
 	mux.Handle("GET /login",dynamic.ThenFunc(app.login))
+
+	mux.Handle("POST /login",dynamic.ThenFunc(app.loginPost))
+
+	mux.Handle("GET /logout",dynamic.ThenFunc(app.logoutPost))
+
 
 	mux.Handle("GET /contact",dynamic.ThenFunc(app.contact))
 

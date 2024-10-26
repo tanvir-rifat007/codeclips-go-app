@@ -193,8 +193,71 @@ func (app *App) login(w http.ResponseWriter,r *http.Request){
 	data.Form= UserLoginForm{
 		Email: "",
 		Password: "",
+
 	}
 
 	app.render(w,r,http.StatusOK,"login.tmpl.html",data)
+
+}
+
+func (app *App) loginPost(w http.ResponseWriter, r *http.Request){
+	var form UserLoginForm
+
+	err:=app.decodePostForm(w,r,&form)
+
+	if err!=nil{
+		app.clientError(w,http.StatusBadRequest)
+		return
+	}
+
+	form.CheckField(validator.NotBlank(form.Email), "email", "This field cannot be blank")
+		form.CheckField(validator.Matches(form.Email, validator.EmailRX), "email", "This field must be a valid email address")
+		form.CheckField(validator.NotBlank(form.Password), "password", "This field cannot be blank")
+
+		if !form.Valid() {
+				data := app.newTemplateData(r)
+				data.Form = form
+				app.render(w, r, http.StatusUnprocessableEntity, "login.tmpl.html", data)
+				return
+		}
+
+		id, err := app.users.Authenticate(form.Email, form.Password)
+		if err != nil {
+				if errors.Is(err, models.ErrInvalidCredentials) {
+						form.AddFieldError("email", "Email address or password is incorrect")
+						data := app.newTemplateData(r)
+						data.Form = form
+						app.render(w, r, http.StatusUnprocessableEntity, "login.tmpl.html", data)
+				} else {
+						app.serverError(w, r, err)
+				}
+				return
+		}
+
+		// renew token:
+
+		err = app.sessionManager.RenewToken(r.Context())
+
+		if err!=nil{
+			app.serverError(w,r,err)
+			return
+		}
+
+		// add the authentication user id in the session
+		app.sessionManager.Put(r.Context(), "authenticatedUserID", id)
+
+		http.Redirect(w, r, "/clips", http.StatusSeeOther)
+}
+
+
+func (app *App) logoutPost(w http.ResponseWriter,r *http.Request){
+
+	app.sessionManager.RenewToken(r.Context())
+
+	app.sessionManager.Remove(r.Context(),"authenticatedUserID")
+
+	app.sessionManager.Put(r.Context(),"toast","You've been logged out successfully!")
+
+	http.Redirect(w,r,"/",http.StatusSeeOther)
 
 }

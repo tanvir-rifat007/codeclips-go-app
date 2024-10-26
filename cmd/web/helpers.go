@@ -29,6 +29,12 @@ func (app *App) newTemplateData(r *http.Request)TemplateData{
 	return TemplateData{
 		CurrentYear: time.Now().Year(),
 		 Toast : app.sessionManager.PopString(r.Context(), "toast"),
+
+		 IsAuthenticated: app.isAuthenticated(r),
+
+		 
+
+
 	}
 
 }
@@ -76,6 +82,16 @@ func (app *App) decodePostForm(w http.ResponseWriter, r *http.Request,dst any)er
 	}
  return nil
 
+}
+
+func (app *App) isAuthenticated(r *http.Request)bool{
+	  isAuthenticated,ok:=r.Context().Value(isAuthenticatedContextKey).(bool)
+
+		if !ok{
+			return false
+		}
+
+		return isAuthenticated
 }
 
 
